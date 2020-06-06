@@ -90,8 +90,8 @@ class MultiViewTripletLoss:
       utt_diff_k[i] = self.get_topk(diff.view(-1)[perms == i], k=k)
     obj2 = F.relu(self.margin + utt_diff_k[inv] - same)
 
-    #loss = (obj0 + obj1 + obj2).mean(1)
+    loss = (obj0 + obj1 + obj2).mean(1)
     
-    loss = (obj0 + obj2).mean(1)
+    #loss = (obj0 + obj2).mean(1)
 
     return loss.mean() if self.average else loss.sum()

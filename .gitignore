@@ -1,5 +1,8 @@
 save/
 transformer1_save/
 transformer2_save/
+transformer3_save/
+transformer4_save/
+transformer5_save/
 *.pyc
 
