@@ -26,7 +26,7 @@
     "loss_margin": 0.5,
     "loss_min_k": 16,
     "main_fn": "multiview_trainer.train",
-    "net_fn": "multiview_transformer.MultiViewTransformerEncoder",
+    "net_fn": "multiview_transformer2.MultiViewTransformerEncoder",
     "net_proj": null,
     "net_norm": null,
     "net_view1_num_layers": 6,
@@ -67,5 +67,5 @@
     "vocab_data_subwords": "phones",
     "vocab_sampler_batch_size": 1000,
     "vocab_sampler_fn": "data.batch_samplers.BatchSampler",
-    "config_file": "train_config.json"
+    "config_file": "train_config2.json"
 }

@@ -6,10 +6,10 @@ import numpy as np
 
 from layer.linear import Linear
 from layer.utils import pack_padded_sequence, pad_packed_sequence
-from saver.saver import Saver
+from saver.saver import Saver2
 
 
-class TransformerEncoder_default(nn.Module, Saver):
+class TransformerEncoder_default(nn.Module, Saver2):
 
   def __init__(self,
                num_layers,
@@ -23,7 +23,7 @@ class TransformerEncoder_default(nn.Module, Saver):
                norm=None,
                proj=None):
     nn.Module.__init__(self)
-    Saver.__init__(self)
+    Saver2.__init__(self)
 
     log.info(f" >> num_layers= {num_layers}")
     log.info(f" >> input_size= {input_size}")
@@ -35,9 +35,10 @@ class TransformerEncoder_default(nn.Module, Saver):
     
     if num_embeddings is not None:
       log.info(f" >> num input embeddings= {num_embeddings}")
-      self.emb = nn.Embedding(num_embeddings=num_embeddings + 1,
+      self.emb = nn.Embedding(num_embeddings=num_embeddings + 2,
                               embedding_dim=d_model,
                               padding_idx=0)
+      self.emb_output_size = int(num_embeddings + 1)
     else:
       self.emb = nn.Linear(in_features=input_size, out_features=d_model)
     
@@ -51,7 +52,7 @@ class TransformerEncoder_default(nn.Module, Saver):
                                                      num_layers=num_layers, 
                                                      norm=norm)
     
-    self.pos_encoder = PositionalEncoding(d_model=d_model, dropout=0.0)
+    self.pos_encoder = PositionalEncoding(d_model=d_model, dropout=0.0) 
     
 
     if proj is not None:
@@ -114,6 +115,8 @@ class TransformerEncoder_default(nn.Module, Saver):
         for i in range(x.shape[0]):
             x_i = x[i,0:lens[i]]
             
+            #x_i[-1] = self.emb_output_size
+            
             x_i = self.emb(x_i)
             
             x_i = x_i.unsqueeze(1)
@@ -122,7 +125,7 @@ class TransformerEncoder_default(nn.Module, Saver):
             
             x_i = self.transformer_encoder(x_i)
             
-            x_i = x_i.sum(0)
+            x_i = x_i[0,:,:]
             
             x_out.append(x_i)
 
@@ -131,8 +134,9 @@ class TransformerEncoder_default(nn.Module, Saver):
     
     if self.project:
         x_out = self.proj(x_out)
-        
-    x_out = x_out/lens.cuda().unsqueeze(1)
+    
+    if len(x.shape) == 3:
+        x_out = x_out/lens.cuda().unsqueeze(1)
     
     return x_out, lens
 
