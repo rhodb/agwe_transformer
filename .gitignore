@@ -4,5 +4,14 @@ experiment1.1_save/
 experiment1.2_save/
 experiment2.1_save/
 experiment2.2_save/
+experiment3.1_save/
+experiment3.2_save/
+experiment4.1_save/
+experiemnt4.2_save/
+experiment5.1_save/
+experiment5.2_save/
+experiment6.1_save/
+experiment6.2_save/
+*.json
 *.pyc
 
