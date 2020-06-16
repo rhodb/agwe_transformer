@@ -4,10 +4,10 @@ import torch.nn as nn
 
 from layer.transformer.transformer2 import TransformerEncoder_default
 from layer.linear import Linear
-from saver.saver import Saver2
+from saver.saver import Saver
 
 
-class MultiViewTransformerEncoder(nn.Module, Saver2):
+class MultiViewTransformerEncoder(nn.Module, Saver):
 
   def __init__(self,
                view1_num_layers,
@@ -33,7 +33,7 @@ class MultiViewTransformerEncoder(nn.Module, Saver2):
                norm=None,
                loss_fn=None):
     nn.Module.__init__(self)
-    Saver2.__init__(self)
+    Saver.__init__(self)
 
     self.net = nn.ModuleDict()
 

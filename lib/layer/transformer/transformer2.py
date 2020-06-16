@@ -6,10 +6,10 @@ import numpy as np
 
 from layer.linear import Linear
 from layer.utils import pack_padded_sequence, pad_packed_sequence
-from saver.saver import Saver2
+from saver.saver import Saver
 
 
-class TransformerEncoder_default(nn.Module, Saver2):
+class TransformerEncoder_default(nn.Module, Saver):
 
   def __init__(self,
                num_layers,
@@ -23,7 +23,7 @@ class TransformerEncoder_default(nn.Module, Saver2):
                norm=None,
                proj=None):
     nn.Module.__init__(self)
-    Saver2.__init__(self)
+    Saver.__init__(self)
 
     log.info(f" >> num_layers= {num_layers}")
     log.info(f" >> input_size= {input_size}")
